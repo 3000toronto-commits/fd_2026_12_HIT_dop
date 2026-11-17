@@ -1,0 +1,567 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Допущения компании</title>
+
+<style>
+  .fd-assumptions {
+    --fd-header: #1F4E79;
+    --fd-header-hover: #326999;
+    --fd-blue: #DDEBF7;
+    --fd-blue-hover: #C4E3F5;
+    --fd-yellow: #FFF2CC;
+    --fd-yellow-hover: #FFE49A;
+    --fd-white-hover: #DFF2F3;
+    --fd-border: #D5D5D5;
+    --fd-text: #2A2F33;
+
+    width: 100%;
+    max-width: 757px;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--fd-text);
+    font-size: 12px;
+  }
+
+  .fd-assumptions,
+  .fd-assumptions * {
+    box-sizing: border-box;
+  }
+
+  .fd-assumptions__wrap {
+    position: relative;
+    width: 100%;
+    isolation: isolate;
+    overflow: visible;
+  }
+
+  .fd-assumptions__table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 1px solid #B9C2CA;
+    background: white;
+  }
+
+  .fd-assumptions__table col:nth-child(1) {
+    width: 39.3%;
+  }
+
+  .fd-assumptions__table col:nth-child(2) {
+    width: 8.3%;
+  }
+
+  .fd-assumptions__table col:nth-child(3) {
+    width: 52.4%;
+  }
+
+  .fd-assumptions__table th {
+    height: 34px;
+    padding: 8px 5px;
+    background: var(--fd-header);
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.2;
+    border: 1px solid var(--fd-header);
+  }
+
+  .fd-assumptions__table td {
+    padding: 4px 4px;
+    min-height: 25px;
+    font-size: 12px;
+    line-height: 1.25;
+    vertical-align: middle;
+    border: 1px solid var(--fd-border);
+    background: white;
+    overflow-wrap: break-word;
+  }
+
+  .fd-assumptions__table td:nth-child(2) {
+    background: var(--fd-yellow);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .fd-assumptions__table tbody tr:nth-child(-n+2)
+  td:not(:nth-child(2)) {
+    background: var(--fd-blue);
+  }
+
+  .fd-assumptions__table tbody tr:nth-child(2) td {
+    border-bottom: 1px solid #444444;
+  }
+
+  .fd-assumptions__table tbody tr:nth-child(3) td {
+    border-top: 1px solid #444444;
+  }
+
+  .fd-assumptions__table .fd-assumptions__filled,
+  .fd-assumptions__table th {
+    cursor: zoom-in;
+  }
+
+  .fd-assumptions__table .fd-assumptions__filled:focus-visible,
+  .fd-assumptions__table th:focus-visible {
+    outline: 2px solid #F5811F;
+    outline-offset: -2px;
+  }
+
+  /* Увеличенная ячейка поверх настоящей таблицы */
+
+  .fd-assumptions__zoom {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+
+    padding: 8px 9px;
+    background: var(--fd-white-hover);
+    color: var(--fd-text);
+    border: 1px solid #367879;
+
+    box-shadow:
+      0 6px 17px rgba(42, 47, 51, 0.20);
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14.4px;
+    line-height: 1.35;
+
+    overflow-wrap: break-word;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: scaleY(0.84);
+    transform-origin: center center;
+
+    transition:
+      transform 240ms ease-out,
+      opacity 180ms ease-out,
+      visibility 180ms;
+
+    pointer-events: none;
+  }
+
+  .fd-assumptions__zoom.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: scaleY(1);
+  }
+
+  .fd-assumptions__zoom--value {
+    background: var(--fd-yellow-hover);
+    border-color: #B18F20;
+    justify-content: flex-end;
+    text-align: right;
+    white-space: nowrap;
+    overflow-wrap: normal;
+  }
+
+  .fd-assumptions__zoom--blue {
+    background: var(--fd-blue-hover);
+    border-color: #367879;
+  }
+
+  .fd-assumptions__zoom--header {
+    background: var(--fd-header-hover);
+    color: white;
+    border-color: #1F4E79;
+    justify-content: center;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  @media (max-width: 540px) {
+    .fd-assumptions__wrap {
+      overflow-x: auto;
+      overflow-y: visible;
+    }
+
+    .fd-assumptions__table {
+      min-width: 757px;
+    }
+
+    .fd-assumptions__zoom {
+      font-size: 14.4px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fd-assumptions__zoom {
+      transition: none;
+    }
+  }
+</style>
+</head>
+
+<body style="margin:0;padding:0;background:white;">
+
+<section class="fd-assumptions" id="fd-assumptions">
+
+  <div class="fd-assumptions__wrap">
+
+    <table class="fd-assumptions__table">
+      <colgroup>
+        <col>
+        <col>
+        <col>
+      </colgroup>
+
+      <thead>
+        <tr>
+          <th scope="col">Параметр</th>
+          <th scope="col">Значение</th>
+          <th scope="col">Что означает</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr>
+          <td>Начальный остаток денег на 01.01.2027, руб.</td>
+          <td>10 000 000</td>
+          <td>Доступные денежные средства на начало года</td>
+        </tr>
+
+        <tr>
+          <td>Минимальный резерв ликвидности, руб.</td>
+          <td>1 000 000</td>
+          <td>Минимальный остаток, ниже которого ликвидность считается недостаточной</td>
+        </tr>
+
+        <tr>
+          <td>Собственная ценовая эластичность спроса</td>
+          <td>-0,8</td>
+          <td>Изменение объема продаж при изменении собственной цены на 1%</td>
+        </tr>
+
+        <tr>
+          <td>Перекрестная эластичность по цене конкурентов</td>
+          <td>0,4</td>
+          <td>Определяет реакцию объема продаж на изменение цены конкурентов</td>
+        </tr>
+
+        <tr>
+          <td>Доля основного сырья с изменяемой ценой</td>
+          <td>70%</td>
+          <td>Остальная часть считается защищенной фиксированной ценой</td>
+        </tr>
+
+        <tr>
+          <td>Доля электроэнергии, чувствительная к изменению цены</td>
+          <td>40%</td>
+          <td>Например, доля закупки на нерегулируемом рынке</td>
+        </tr>
+
+        <tr>
+          <td>Доля газа, чувствительная к изменению цены</td>
+          <td>30%</td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>Нехеджированная доля валютных закупок</td>
+          <td>80%</td>
+          <td>На эту долю закупок действует изменение USD или EUR</td>
+        </tr>
+
+        <tr>
+          <td>Доля долга, чувствительная к ключевой ставке</td>
+          <td>60%</td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>Средняя базовая ставка по долгу</td>
+          <td>18%</td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>Доля поступлений, срок которых можно сдвигать</td>
+          <td>30%</td>
+          <td>Используется при задержке и ускорении оплаты покупателей</td>
+        </tr>
+
+        <tr>
+          <td>Доля платежей поставщикам, срок которых можно менять</td>
+          <td>40%</td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>Доля закупок, зависящая от объема продаж</td>
+          <td>80%</td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>Лаг корректировки закупок вслед за объемом, месяцев</td>
+          <td>1</td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>Доля прочих ТМЦ с изменяемой ценой</td>
+          <td>50%</td>
+          <td></td>
+        </tr>
+
+        <tr>
+          <td>Доля логистики, чувствительная к тарифам</td>
+          <td>100%</td>
+          <td></td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <!-- Единственный всплывающий слой -->
+    <div class="fd-assumptions__zoom"
+         aria-hidden="true"></div>
+
+  </div>
+
+</section>
+
+<script>
+(function () {
+  "use strict";
+
+  const root = document.getElementById("fd-assumptions");
+  if (!root || root.dataset.initialized === "1") return;
+  root.dataset.initialized = "1";
+
+  const wrap = root.querySelector(".fd-assumptions__wrap");
+  const table = root.querySelector(".fd-assumptions__table");
+  const zoom = root.querySelector(".fd-assumptions__zoom");
+
+  const hoverSupported = window.matchMedia(
+    "(hover: hover) and (pointer: fine)"
+  ).matches;
+
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  let activeCell = null;
+  let selectedCell = null;
+
+  const cells = Array.from(
+    table.querySelectorAll("th, td")
+  );
+
+  function isFilled(cell) {
+    return Boolean(cell.textContent.trim());
+  }
+
+  function getColumnIndex(cell) {
+    return cell.cellIndex;
+  }
+
+  function hideZoom() {
+    zoom.classList.remove("is-active");
+    activeCell = null;
+  }
+
+  function showZoom(cell) {
+    if (!cell || !isFilled(cell)) {
+      hideZoom();
+      return;
+    }
+
+    activeCell = cell;
+
+    const column = getColumnIndex(cell);
+    const isHeader = cell.tagName === "TH";
+    const isValue = column === 1 && !isHeader;
+    const isBlue =
+      !isHeader &&
+      cell.parentElement.rowIndex <= 2 &&
+      column !== 1;
+
+    zoom.className = "fd-assumptions__zoom";
+
+    if (isHeader) {
+      zoom.classList.add("fd-assumptions__zoom--header");
+    } else if (isValue) {
+      zoom.classList.add("fd-assumptions__zoom--value");
+    } else if (isBlue) {
+      zoom.classList.add("fd-assumptions__zoom--blue");
+    }
+
+    zoom.textContent = cell.textContent.trim();
+
+    const cellRect = cell.getBoundingClientRect();
+    const wrapRect = wrap.getBoundingClientRect();
+
+    const cellWidth = cellRect.width;
+    const cellHeight = cellRect.height;
+
+    /*
+      Направление расширения:
+      0 — вправо;
+      1 — от центра;
+      2 — влево.
+    */
+
+    let zoomWidth;
+
+    if (column === 0) {
+      zoomWidth = cellWidth * 1.24;
+    } else if (column === 1) {
+      zoomWidth = Math.max(cellWidth * 1.75, 112);
+    } else {
+      zoomWidth = cellWidth * 1.20;
+    }
+
+    // Не выходим за границы таблицы.
+    zoomWidth = Math.min(zoomWidth, wrapRect.width);
+
+    const cellLeft =
+      cellRect.left - wrapRect.left + wrap.scrollLeft;
+
+    const cellTop =
+      cellRect.top - wrapRect.top + wrap.scrollTop;
+
+    let zoomLeft;
+
+    if (column === 0) {
+      // Левый столбец: фиксируем левую границу.
+      zoomLeft = cellLeft;
+    } else if (column === 1) {
+      // Средний: расширяем в обе стороны.
+      zoomLeft =
+        cellLeft + (cellWidth - zoomWidth) / 2;
+    } else {
+      // Правый: фиксируем правую границу.
+      zoomLeft =
+        cellLeft + cellWidth - zoomWidth;
+    }
+
+    // Ограничиваем слой границами таблицы.
+    const tableLeft =
+      table.getBoundingClientRect().left -
+      wrapRect.left + wrap.scrollLeft;
+
+    const tableRight = tableLeft + table.offsetWidth;
+
+    zoomLeft = Math.max(tableLeft, zoomLeft);
+    zoomLeft = Math.min(
+      zoomLeft,
+      tableRight - zoomWidth
+    );
+
+    zoom.style.width = zoomWidth + "px";
+    zoom.style.left = zoomLeft + "px";
+
+    // Измеряем высоту увеличенного текста.
+    zoom.style.top = "0px";
+    zoom.style.minHeight = "0px";
+
+    const naturalHeight = zoom.scrollHeight;
+    const minHeight = cellHeight * 1.25;
+
+    const zoomHeight = Math.max(
+      naturalHeight,
+      minHeight
+    );
+
+    zoom.style.height = zoomHeight + "px";
+
+    // Вертикальное расширение относительно центра.
+    const zoomTop =
+      cellTop + (cellHeight - zoomHeight) / 2;
+
+    zoom.style.top = zoomTop + "px";
+
+    // Анимация появления.
+    zoom.classList.add("is-active");
+  }
+
+  cells.forEach(function (cell) {
+    if (!isFilled(cell)) return;
+
+    cell.classList.add("fd-assumptions__filled");
+    cell.setAttribute("tabindex", "0");
+
+    if (hoverSupported) {
+      cell.addEventListener("mouseenter", function () {
+        if (!selectedCell) {
+          showZoom(cell);
+        }
+      });
+
+      cell.addEventListener("mouseleave", function () {
+        if (!selectedCell) {
+          hideZoom();
+        }
+      });
+    }
+
+    // Касание или щелчок.
+    cell.addEventListener("click", function () {
+      if (selectedCell === cell) {
+        selectedCell = null;
+        hideZoom();
+      } else {
+        selectedCell = cell;
+        showZoom(cell);
+      }
+    });
+
+    // Клавиатура.
+    cell.addEventListener("focus", function () {
+      showZoom(cell);
+    });
+
+    cell.addEventListener("blur", function () {
+      if (!selectedCell) hideZoom();
+    });
+
+    cell.addEventListener("keydown", function (event) {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        cell.click();
+      }
+
+      if (event.key === "Escape") {
+        selectedCell = null;
+        hideZoom();
+      }
+    });
+  });
+
+  // Клик за пределами таблицы закрывает увеличение.
+  document.addEventListener("pointerdown", function (event) {
+    if (!root.contains(event.target)) {
+      selectedCell = null;
+      hideZoom();
+    }
+  });
+
+  // Обновляем координаты при изменении размеров.
+  window.addEventListener("resize", function () {
+    if (activeCell) {
+      showZoom(activeCell);
+    }
+  });
+
+  wrap.addEventListener("scroll", function () {
+    if (activeCell) {
+      showZoom(activeCell);
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>
